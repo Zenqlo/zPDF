@@ -1,0 +1,27 @@
+{
+  "name": "zPDF by zenqlo.com",
+  "version": "1.0",
+  "author": "zenqlo.com",
+  "description": "A Free Simple PDF Editor: Split pages, Merge, Rearrange, add Signature, Image and Multi-language Text — Offline, Private & Support Mobile.",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "zPDF - zenqlo.com",
+    "default_icon": {
+      "64": "icons/64x64.png",
+      "96": "icons/96x96.png",
+      "128": "icons/128x128.png",
+      "192": "icons/192x192.png",
+      "256": "icons/256x256.png"      
+    },
+    "default_popup": "popup.html",
+    "background": {
+      "scripts": [
+        "popup.js"
+      ]
+    },
+    "theme_color": "#1c4156",
+    "background_color": "#ffffff",
+    "license": "LICENSE",
+    "homepage_url": "https://zpdf.zenqlo.com,"
+  }
+}

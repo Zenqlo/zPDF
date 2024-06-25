@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="A Simple PDF Editor: Split pages, Merge, Rearrange, add Signature, Image and Text; Support multi-language. — Offline and Private.">
+    <link rel="icon" type="image/x-icon" href="/assets/icon.ico">
+    <link rel="apple-touch-icon" href="/assets/180x180.png" sizes="180x180">
+    <meta name="theme-color" content="#1c4156">
+    <title>zPDF - zenqlo.com</title>
+  <script type="module" crossorigin src="/assets/main.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main.css">
+<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+
+<body>
+    <div class="container-fluid overflow-hidden">
+        <div class="row overflow-hidden">
+            <div class="col-12 bg-light fix position-fixed" style="z-index: 1000; top: 0">
+                <div class="col-12 bg-light align-items-center sticky-top">
+                    <ul
+                        class="flex-row nav nav-pills nav-flush flex-nowrap mb-auto mx-auto text-center justify-content-evenly w-100 px-3 align-items-center menu-spacing ">
+                        <li>
+                            <div class="dropdown">
+                                <a href="#"
+                                    class="d-flex align-items-center justify-content-center py-3 px-3 text-decoration-none "
+                                    id="menu-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-plus fs-1"></i>
+                                </a>
+                                <ul class="dropdown-menu text-small shadow">
+                                    <li>
+                                        <a class="dropdown-item" href="#" id="pdf-page-btn">
+                                            <i class="bi bi-file-earmark-pdf fs-1">
+                                                PDF
+                                            </i>
+                                            <input type="file" id="pdf-page-input" accept=".pdf" hidden>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" id="blank-page-btn">
+                                            <i class="bi bi-file-earmark fs-1">
+                                                Blank
+                                            </i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <a href="#"
+                                    class="d-flex align-items-center justify-content-center py-3 px-3 text-decoration-none "
+                                    id="menu-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-pencil-square fs-1"></i>
+                                </a>
+                                <ul class="dropdown-menu text-small shadow">
+                                    <li>
+                                        <a class="dropdown-item" href="#" id="image-btn">
+                                            <i class="bi bi-card-image fs-1">
+                                                Image
+                                            </i>
+                                            <input type="file" id="image-input" accept="image/jpeg, image/png" hidden>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" id="text-btn">
+                                            <i class="bi bi-fonts fs-1">
+                                                Text
+                                            </i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" id="rect-btn">
+                                            <i class="bi bi-textarea fs-1">
+                                                Rectangle
+                                            </i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" id="draw-btn">
+                                            <i class="bi bi-brush fs-1">
+                                                Draw
+                                            </i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link py-3 px-3" title="" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-original-title="Products" id="clear-btn">
+                                <i class="bi bi-trash fs-1"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link py-3 px-3" title="" data-bs-toggle="tooltip"
+                                data-bs-placement="right" data-bs-original-title="Customers" id="save-btn">
+                                <i class="bi bi-download fs-1"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="modal fade" id="drawModal" tabindex="-1" aria-labelledby="drawModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="drawModalLabel">Draw</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="drawContainer">
+
+                            </div>
+
+                            <div class="mb-3 py-3">
+                                <label for="colorPicker" class="form-label">Choose color: </label>
+                                <input type="color" id="colorPicker" value="#000000">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="widthPicker" class="form-label">Choose width: </label>
+                                <input type="number" id="widthPicker" min="1" max="20" value="3">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <div></div>
+                            <button type="button" class="btn btn-primary" id="saveDrawing">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="addTextModal" tabindex="-1" aria-labelledby="addTextModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addTextModalLabel">Edit Text</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body ">
+                            <form id="addTextForm">
+                                <div class="row mb-3">
+                                    <label for="inputColor" class="col-sm-2 col-form-label">Color:</label>
+                                    <div class="col-sm-10">
+                                        <input type="color" class="form-control form-control-color" id="inputColor"
+                                            title="Choose your color">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 d-flex align-items-end">
+                                    <label for="transparencyPicker" class="col-sm-2 col-form-label">Opacity:</label>
+                                    <div class="col-sm-10">
+                                        <input type="range" id="transparencyPicker" min="0" max="100" value="100">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 d-flex align-items-end">
+                                    <label for="inputFontSize" class="col-sm-2 col-form-label">Size:</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="number" id="inputFontSize" min="10" max="1000"
+                                            value="150" oninput="if(value>1000){value=1000}">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <textarea class="form-control" id="Textarea" rows="8"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <div></div>
+                            <button type="button" class="btn btn-primary" id="doneButton">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="imageModalLabel">Edit Image</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editImageForm">
+                                <div class="row mb-3 d-flex align-items-end">
+                                    <label for="opacityPicker" class="col-sm-2 col-form-label">Opacity: </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" id="opacityPicker" min="0" max="100" value="100">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <div></div>
+                            <button type="button" class="btn btn-primary" id="imgdoneButton">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="rectModal" tabindex="-1" aria-labelledby="rectModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="rectModalLabel">Edit Rectangle</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editRectangleForm">
+                                <div class="row mb-3  d-flex align-items-end">
+                                    <label for="colorPicker" class="col-sm-2 col-form-label">Color: </label>
+                                    <div class="col-sm-10">
+                                        <input type="color" id="rectcolorPicker" value="#000000">
+                                    </div>
+                                </div>
+                                <div class="row mb-3 d-flex align-items-end">
+                                    <label for="rectopacityPicker" class="col-sm-2 col-form-label vtm">Opacity: </label>
+                                    <div class="col-sm-10">
+                                        <input type="range" id="rectopacityPicker" min="0" max="100" value="100">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <div></div>
+                            <button type="button" class="btn btn-primary" id="rectdoneButton">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-center">
+                        <div class="modal-header bg-warning d-flex flex-column align-items-center py-4">
+                            <i class="bi bi-patch-exclamation" style="font-size: 60px;"></i>
+                        </div>
+                        <h4 class="modal-title fs-1 mb-0">Oops!</h4>
+                        <div class="modal-body py-4 fs-5 mb-0" id="alertModalBody">
+                        </div>
+                        <div class="modal-body justify-content-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-center">
+                        <div class="modal-header bg-warning d-flex flex-column align-items-center py-4">
+                            <i class="bi bi-save" style="font-size: 60px;"></i>
+                        </div>
+                        <h4 class="modal-title fs-1 mb-0">Saved!</h4>
+                        <div class="modal-body py-4 fs-5 mb-0" id="saveModalBody">
+                        </div>
+                        <div class="modal-body justify-content-center">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="clearModal" tabindex="-1" aria-labelledby="clearModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content text-center">
+                        <div class="modal-header bg-warning d-flex flex-column align-items-center py-4">
+                            <i class="bi bi-patch-exclamation" style="font-size: 60px;"></i>
+                        </div>
+                        <div class="modal-body py-4 fs-5 mb-0" id="clearModalBody">
+                            <h4 class="modal-title fs-1 mb-0">Clear All Pages?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="clearDoneButton">Confirm</button>
+                            <div></div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="loadModal" tabindex="-1" aria-labelledby="loadModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <img src="/assets/LOADING.gif" alt="Loading..."
+                        style="max-width: 50%; margin-left: auto; margin-right: auto;" />
+                </div>
+            </div>
+
+            <div class="col-sm p-3 fix min-vh-100 max-vh-100" id="pdf-row">
+                <div class="main-content">
+                    <div class="pdf-viewer">
+                        <div class="pdf-content"></div>
+                        <!-- PDF content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<style>
+
+</style>
+
+</html>
