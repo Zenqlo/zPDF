@@ -1,13 +1,20 @@
 # zPDF
 
-A Simple PDF Editor: Split PDF pages, Merge PDF pages, Rearrange PDF pages, add Signature, Image and Text; 
+### A Simple PDF Editor: 
+### Split PDF pages, Merge PDF pages, Rearrange PDF pages, add Signatures, Images and Text; 
 
-Support multi-language. | Offline and No Permission Needed. | All code are run in client browser.
+<br />
 
-Designed to be cross-platform for both mobile (Android/iOS) and desktop (Windows/MacOS/Linux). 
+#### Works for both mobile (Android/iOS) and desktop (Windows/MacOS/Linux). 
 
-It now works inside browser as PWA or as Chrome/Edge Plugin.
+#### Cross-platform  |  Support multi-language  |  Offline and No Permission Needed  |  All code runs in client browser.
 
+
+<br />
+
+#### It now works inside browser as PWA or as Chrome/Edge Plugin.
+
+<br />
 
 Link for the app:
 https://zpdf-app.zenqlo.com/
