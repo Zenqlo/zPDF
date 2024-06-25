@@ -1,8 +1,8 @@
 {
-  "name": "zPDF by zenqlo.com",
+  "name": "zPDF—Free Simple PDF Editor",
   "version": "1.0",
-  "author": "zenqlo.com",
-  "description": "A Free Simple PDF Editor: Split pages, Merge, Rearrange, add Signature, Image and Multi-language Text — Offline, Private & Support Mobile.",
+  "author": "Zenqlo",
+  "description": "A Simple PDF Editor: Split pages, Merge, Rearrange, add Signature, Image and Multi-language Text. — Offline and Private.",
   "manifest_version": 3,
   "action": {
     "default_title": "zPDF - zenqlo.com",
