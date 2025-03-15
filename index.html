@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="A Simple PDF Editor: Split pages, Merge, Rearrange, add Signature, Image and Multi-language Text. — Offline and Private.">
-    <link rel="icon" type="image/x-icon" href="/assets/icon.ico">
-    <link rel="apple-touch-icon" href="/assets/180x180.png" sizes="180x180">
+    <link rel="icon" type="image/x-icon" href="./src/icons/icon.ico">
+    <link rel="apple-touch-icon" href="./src/icons/180x180.png" sizes="180x180">
     <meta name="theme-color" content="#1c4156">
     <title>zPDF - zenqlo.com</title>
-  <script type="module" crossorigin src="/assets/main.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/main.css">
-<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+</head>
 
 <body>
     <div class="container-fluid overflow-hidden">
@@ -291,7 +289,7 @@
 
             <div class="modal fade" id="loadModal" tabindex="-1" aria-labelledby="loadModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                    <img src="/assets/LOADING.gif" alt="Loading..."
+                    <img src="/src/LOADING.gif" alt="Loading..."
                         style="max-width: 50%; margin-left: auto; margin-right: auto;" />
                 </div>
             </div>
@@ -307,7 +305,10 @@
         </div>
     </div>
 
-</body>
+</body>
+<script defer type="module" src="./src/zpdf.js"></script>
+<link rel="stylesheet" href="./src/styles.css">
+<link rel="stylesheet" href="./src/bootstrap-icons/bootstrap-icons.css">
 
 <style>
 
